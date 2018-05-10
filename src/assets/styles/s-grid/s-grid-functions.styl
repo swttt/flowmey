@@ -1,0 +1,77 @@
+rem-calc(value)
+    u = unit(value);
+    if (u is 'rem') {
+        return unit(value, u);
+    } else {
+        return unit(value / base-font-size, 'rem')
+    }
+
+grid(direction = 'row', cells-align = 'top', justify = '')
+    display flex
+    flex-wrap wrap
+    if cells-align is 'top'
+        align-items flex-start
+    if cells-align is 'bottom'
+        align-items flex-end
+    if cells-align is 'center'
+        align-items center
+    if cells-align is 'stretch'
+        align-items stretch
+    if direction is 'row'
+        flex-direction row
+    if direction is 'row-reverse'
+        flex-direction row-reverse
+    if direction is 'column'
+        flex-direction column
+    if direction is 'column-reverse'
+        flex-direction column-reverse
+    if justify is 'center'
+        justify-content center
+    if justify is 'start'
+        justify-content flex-start
+    if justify is 'end'
+        justify-content flex-end
+
+cell(i = 1, cols = columns, align = '', g = gutter)
+    if g is not 0
+        flex-basis: s('calc(100% * %s - %s)', i / cols, rem-calc(g))
+    else
+        flex-basis: s('calc(100% * %s)', i / cols)
+    min-width 0 // FF adjustment for responsive images
+    if g is not 0
+        margin: rem-calc(g / 2)
+    if align is 'top'
+        align-self flex-start
+    if align is 'bottom'
+        align-self flex-end
+    if align is 'center'
+        align-self center
+
+cell-offset(i = 1, cols = columns, g = gutter)
+    if g is not 0
+        margin-left: s('calc(100% * %s + (%s / 2))', i / cols, rem-calc(g)) !important
+    else
+        margin-left: s('calc(100% * %s)', i / cols) !important
+
+center(value, pad = null)
+    margin-left auto
+    margin-right auto
+    width 100%
+    u = unit(value)
+    if (u is 'rem' or u is '%')
+        max-width unit(value, u)
+    else
+        max-width rem-calc(value)
+    if (pad is null)
+        return
+    else
+        p = unit(pad)
+        if (p is 'rem' or p is '%')
+          padding-left  unit(pad, p)
+          padding-right  unit(pad, p)
+        else
+          padding-left rem-calc(pad)
+          padding-right rem-calc(pad)
+
+stack()
+    cell(1, 1)

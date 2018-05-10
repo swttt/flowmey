@@ -1,0 +1,37 @@
+// Import Lato font
+@import url('https://fonts.googleapis.com/css?family=Lato')
+
+// Flexbox grid
+@import 's-grid/s-grid-settings.styl'
+
+// you can overwrite settings here
+gutter = 0px
+
+@import 's-grid/s-grid-functions.styl'
+@import 's-grid/s-grid-classes.styl'
+
+// Import variables
+@import 'variables.styl'
+
+html,body
+  font-family: Lato
+  color: color-dark
+
+p
+  font-size: 16px
+
+h1
+  font-size: 32px
+
+.container
+  grid()
+  .sidebar
+    padding rem-calc(15)
+    margin rem-calc(0)
+    cell(4,12)
+    background-color: color-primary
+  .content
+    padding rem-calc(15)
+    margin rem-calc(0)
+    cell(8,12)
+    background-color color-white
