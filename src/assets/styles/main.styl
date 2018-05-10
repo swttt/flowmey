@@ -5,7 +5,7 @@
 @import 's-grid/s-grid-settings.styl'
 
 // you can overwrite settings here
-gutter = 0px
+
 
 @import 's-grid/s-grid-functions.styl'
 @import 's-grid/s-grid-classes.styl'
@@ -28,10 +28,11 @@ h1
   .sidebar
     padding rem-calc(15)
     margin rem-calc(0)
-    cell(4,12)
+    cell(3,12,g:0)
     background-color: color-primary
+    min-height 100vh
   .content
     padding rem-calc(15)
     margin rem-calc(0)
-    cell(8,12)
+    cell(9,12,g:0)
     background-color color-white

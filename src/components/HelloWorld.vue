@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div class="sidebar">
+      <center><img class="logo" src="@/assets/images/logo.png" /></center>
       <h1>Sidebar</h1>
     </div>
     <div class="content">
