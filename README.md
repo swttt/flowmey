@@ -1,9 +1,7 @@
-<p align="center">
-<img src="https://github.com/swttt/flowmey/raw/master/.github/logo.png" alt="Flowmey Logo"/>
-</p>
-# flowmey
 
-> Homey flow manager for desktops
+<img src="https://github.com/swttt/flowmey/raw/master/.github/logo.png" alt="Flowmey Logo"/>
+
+
 
 ## Build Setup
 
