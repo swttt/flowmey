@@ -1,7 +1,6 @@
-<template>
-    <div class="content">
-      <h1>Content</h1>
-    </div>
+<template lang="pug">
+    div.content
+      h1 Content
 </template>
 
 <script>

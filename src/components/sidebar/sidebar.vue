@@ -1,7 +1,6 @@
-<template>
-  <div class="sidebar">
-    <h1>Sidebar</h1>
-  </div>
+<template lang="pug">
+  div.sidebar
+    h1 sidebar
 </template>
 
 <script>
@@ -12,7 +11,5 @@ export default {
 
 <style lang="stylus">
 @import '~styles/variables.styl'
-
-
 
 </style>
