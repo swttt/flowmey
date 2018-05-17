@@ -46,7 +46,7 @@ export default {
     let user = await this.$athomCloud.getAuthenticatedUser()
     let userHomeys = await user.getHomeys()
     this.allHomeys = userHomeys
-    if (userHomeys.length === 0) {
+    if (userHomeys.length === 1) {
       this.multipleHomeys = false
       let firstHomey = await this.$homeyAPI.forHomeyObject(userHomeys[0])
       Vue.prototype.$homey = await firstHomey
