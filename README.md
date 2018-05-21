@@ -14,6 +14,5 @@ sudo npm run dev
 ```
 
 You can access the web-api trough `this.$homey`.
-For more info on the web-api docs see [Athom Web-API docs](https://developer.athom.com/docs/api)
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+For more info on the web-api docs see the [Athom Web-API docs](https://developer.athom.com/docs/api)
