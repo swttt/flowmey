@@ -1,6 +1,12 @@
 <template lang="pug">
   div.sidebar
     img.logo(src="~assets/images/logo.svg")
+    div.field
+      p.control.has-icons-left
+        input.input(type="search" placeholder="Search...")
+        span.icon.is-left
+          i.fas.fa-search
+
 </template>
 
 <script>
@@ -15,6 +21,7 @@ export default {
 .logo
   display: block
   margin: auto
+  padding-bottom 20px
   width 75%
   height auto
 

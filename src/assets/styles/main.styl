@@ -1,14 +1,7 @@
 // Import Lato font
 @import url('https://fonts.googleapis.com/css?family=Lato')
 
-// Flexbox grid
-@import 's-grid/s-grid-settings.styl'
 
-// you can overwrite settings here
-
-
-@import 's-grid/s-grid-functions.styl'
-@import 's-grid/s-grid-classes.styl'
 
 // Import variables
 @import 'variables.styl'
@@ -24,19 +17,21 @@ h1
   font-size: 32px
 
 #app
-  grid()
+  display flex
+  flex-flow row
+  position fixed
+  top 0
+  left 0
+  right 0
+  bottom 0
   .sidebar
-    padding rem-calc(15)
-    margin rem-calc(0)
-    cell(3,12,g:0)
-    +above(rem-calc(breakpoints[md]))
-      cell(4,12,g:0)
-    +above(rem-calc(breakpoints[lg]))
-      cell(5,12,g:0)
+    padding normal-padding
+    margin-right 20px
     background-color: color-primary
     min-height 100vh
+    min-width 200px
+    width calc(20% - 20px)
   .content
-    padding rem-calc(15)
-    margin rem-calc(0)
-    cell(9,12,g:0)
     background-color color-white
+    width 80%
+    padding normal-padding

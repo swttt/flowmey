@@ -4,7 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-require('@/assets/styles/main.styl')
+require('styles/main.styl')
+require('styles/bulma.sass')
+
+// Bulma imports
+// require('bulma/sass/utilities/_all')
 
 Vue.config.productionTip = false
 
