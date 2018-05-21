@@ -9,7 +9,7 @@
         span.icon.is-left
           i.fas.fa-search
 
-    items(v-bind:obj="flowsandfolders")
+    items.items(v-bind:obj="flowsandfolders")
 
 </template>
 
@@ -74,12 +74,16 @@ export default {
   display: block
   margin: auto
   padding-bottom 20px
-  width 75%
-  height auto
+  width auto
+  height 80px
 
 .sidebar
   background: #00A5FF
   box-shadow: 3px 0 10px 0 rgba(0,0,0,0.50)
   z-index 2
+
+.items
+  overflow-y scroll
+  height calc(100vh - 150px)
 
 </style>
