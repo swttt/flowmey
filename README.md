@@ -13,7 +13,7 @@ npm install
 sudo npm run dev
 
 # you can access the web-api trough
-`this.$homey`
+```this.$homey```
 
 ```
 
