@@ -5,11 +5,14 @@
 
     div.field
       p.control.has-icons-left
-        input.input(type="search" placeholder="Search...")
+        input.input(type="search" v-model="search" placeholder="Search...")
         span.icon.is-left
           i.fas.fa-search
 
-    items.items(v-bind:obj="flowsandfolders")
+    items.items(v-bind:obj="flowsandfolders" v-if="!search")
+    items.items(v-bind:obj="filterFlows" v-if="search && filterFlows.length")
+    div(v-if="search && !filterFlows.length")
+      center No matching flows found!
 
 </template>
 
@@ -25,7 +28,8 @@ export default {
   data () {
     return {
       folders: {},
-      flows: {}
+      flows: {},
+      search: null
     }
   },
   created () {
@@ -42,7 +46,7 @@ export default {
   },
   methods: {
     convert (folder) {
-      var arr = Object.assign(this.flows, this.folders)
+      var arr = {...this.flows, ...this.folders}
       arr = lodash.orderBy(arr, 'order')
       var out = []
       for (var i in arr) {
@@ -62,6 +66,12 @@ export default {
   computed: {
     flowsandfolders: function () {
       return this.convert(false)
+    },
+    filterFlows: function () {
+      var self = this
+      return lodash.filter(this.flows, (flow) => {
+        return lodash.includes(flow.title.toLowerCase(), self.search.toLowerCase())
+      })
     }
   }
 }
