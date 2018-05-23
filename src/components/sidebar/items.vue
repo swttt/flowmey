@@ -2,15 +2,8 @@
 div.item
   ul
     li.child(v-for="item in obj")
-      div
-        span.has-text-white(v-if="item.__athom_api_type === 'HomeyAPI.ManagerFlow.Flow'")
-          icon
-            i.fas.fa-random.has-text-white
-          | {{item.title}}
-        span(v-else)
-          icon
-            i.fas.fa-folder
-          | {{item.title}}
+      flow(:flow="item" v-if="item.__athom_api_type === 'HomeyAPI.ManagerFlow.Flow'")
+      folder(:folder="item" v-else)
 
       items(v-if="item.children" v-bind:obj="item.children")
 
@@ -18,12 +11,16 @@ div.item
 
 <script>
 import items from '@/components/sidebar/items'
+import folder from '@/components/sidebar/folder'
+import flow from '@/components/sidebar/flow'
 
 export default {
   name: 'items',
   props: ['obj'],
   components: {
-    items
+    items,
+    folder,
+    flow
   }
 }
 
@@ -37,7 +34,7 @@ ul li
   position relative
   padding-left 5px
   font-size 14px
-  icon
-    padding 3px
+  p icon
+    padding-right 3px
 
 </style>
