@@ -1,6 +1,6 @@
 <template lang="pug">
-span.folder
-  p.icon
+span
+  span.paddingright3
     i.fas.fa-folder
   | {{folder.title}}
 
@@ -16,6 +16,3 @@ export default {
 }
 
 </script>
-<style lang="stylus">
-
-</style>

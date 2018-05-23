@@ -34,7 +34,5 @@ ul li
   position relative
   padding-left 5px
   font-size 14px
-  p icon
-    padding-right 3px
 
 </style>
