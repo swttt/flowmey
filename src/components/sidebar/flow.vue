@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+div.flow
   span.has-text-white(v-if="flow.enabled")
     span.paddingright3
       i.fas.fa-random
@@ -23,3 +23,14 @@ export default {
 }
 
 </script>
+
+<style lang="stylus">
+
+  .disabled
+    opacity 0.5
+  .paddingright3
+    padding-right 3px
+  .paddingleft3
+    padding-left 3px
+
+</style>

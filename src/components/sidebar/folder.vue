@@ -16,3 +16,12 @@ export default {
 }
 
 </script>
+
+<style lang="stylus">
+
+  .disabled
+    opacity 0.5
+  .paddingright3
+    padding-right 3px
+
+</style>
