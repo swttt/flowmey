@@ -1,0 +1,27 @@
+<template lang="pug">
+span
+  span.paddingright3
+    i.fas.fa-folder
+  | {{folder.title}}
+
+</template>
+
+<script>
+
+export default {
+  name: 'folder',
+  props: ['folder'],
+  components: {
+  }
+}
+
+</script>
+
+<style lang="stylus">
+
+  .disabled
+    opacity 0.5
+  .paddingright3
+    padding-right 3px
+
+</style>
