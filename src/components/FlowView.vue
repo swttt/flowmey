@@ -10,10 +10,10 @@
         card(:card="flow.trigger")
       br
       div.cardGroup AND
-        card(v-for="card in flow.conditions" :card="card")
+        card(v-for="card in flow.conditions" :key="card.id" :card="card")
       br
       div.cardGroup THEN
-        card(v-for="card in flow.actions" :card="card")
+        card(v-for="card in flow.actions" :key="card.id" :card="card")
 </template>
 
 <script>
@@ -27,7 +27,6 @@ export default {
   },
   data () {
     return {
-      flow: ''
     }
   },
   mounted () {
@@ -46,7 +45,7 @@ export default {
   beforeRouteUpdate (to, from, next) {
     this.getFlow(to.params.flow)
     next()
-  },
+  }
 }
 </script>
 

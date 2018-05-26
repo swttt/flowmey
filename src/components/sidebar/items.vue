@@ -2,8 +2,8 @@
 div.item
   ul
     li.child(v-for="item in obj")
-      flow(:flow="item" v-if="item.__athom_api_type === 'HomeyAPI.ManagerFlow.Flow'")
-      folder(:folder="item" v-else)
+      flow(:flow="item" :key="item.id" v-if="item.__athom_api_type === 'HomeyAPI.ManagerFlow.Flow'")
+      folder(:folder="item" :key="item.id" v-else)
 
       items(v-if="item.children" v-bind:obj="item.children")
 

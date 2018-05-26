@@ -9,11 +9,7 @@ div.margin
     //debug: div {{card}}
 
   div.card.broken(v-else)
-    i.fas.fa-unlink
-    br
-    |  {{card.uriObj}}
-
-
+    i.fas.fa-unlink {{card.uriObj}}
 
 </template>
 
