@@ -8,8 +8,8 @@
         input.input(type="search" v-model="search" placeholder="Search...")
         span.icon.is-left
           i.fas.fa-search
-
-    items.items(v-bind:obj="flowsandfolders" v-if="!search")
+    v-collapse-group(v-if="!search")
+      items.items(v-bind:obj="flowsandfolders" )
     items.items(v-bind:obj="filterFlows" v-if="search && filterFlows.length")
     div(v-if="search && !filterFlows.length")
       center.has-text-white No matching flows found!

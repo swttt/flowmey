@@ -2,10 +2,14 @@
 div.item
   ul
     li.child(v-for="item in obj")
-      flow(:flow="item" :key="item.id" v-if="item.__athom_api_type === 'HomeyAPI.ManagerFlow.Flow'")
-      folder(:folder="item" :key="item.id" v-else)
+      flow( :flow="item" :key="item.id" v-if="item.__athom_api_type === 'HomeyAPI.ManagerFlow.Flow'")
 
-      items(v-if="item.children" v-bind:obj="item.children")
+      div(v-if="item.children && item.__athom_api_type === 'HomeyAPI.ManagerFlow.Folder'")
+        v-collapse-group
+          v-collapse-wrapper
+            folder(v-collapse-toggle :folder="item" :key="item.id")
+            items(v-collapse-content :obj="item.children")
+      folder(v-if="!item.children && item.__athom_api_type === 'HomeyAPI.ManagerFlow.Folder'" :folder="item" :key="item.id")
 
 </template>
 
