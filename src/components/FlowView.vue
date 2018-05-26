@@ -1,19 +1,19 @@
 <template lang="pug">
     div.content
       div
-        b Flow: {{flow.title}}
+        b Flow: {{currentFlow.title}}
       div
-        b Folder: {{flow.folder}}
+        b Folder: {{currentFlow.folder}}
       br
       br
       div.cardGroup IF
-        card(:card="flow.trigger")
+        card(v-if="currentFlow.trigger" :card="currentFlow.trigger")
       br
       div.cardGroup AND
-        card(v-for="card in flow.conditions" :key="card.id" :card="card")
+        card(v-if="currentFlow.conditions" v-for="card in currentFlow.conditions" :key="card.id" :card="card")
       br
       div.cardGroup THEN
-        card(v-for="card in flow.actions" :key="card.id" :card="card")
+        card(v-if="currentFlow.actions" v-for="card in currentFlow.actions" :key="card.id" :card="card")
 </template>
 
 <script>
@@ -27,6 +27,7 @@ export default {
   },
   data () {
     return {
+      currentFlow: {}
     }
   },
   mounted () {
@@ -38,7 +39,7 @@ export default {
     getFlow (flow) {
       this.$homey.flow.getFlow({id: flow})
         .then(result => {
-          this.flow = result
+          this.currentFlow = result
         })
     }
   },
