@@ -4,10 +4,13 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import querystring from 'query-string'
+import VueCollapse from 'vue2-collapse'
 // import lodash from 'lodash'
 
-require('styles/main.styl')
 require('styles/bulma.sass')
+require('styles/main.styl')
+
+Vue.use(VueCollapse)
 
 Vue.config.productionTip = false
 
