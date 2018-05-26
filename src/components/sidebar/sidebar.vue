@@ -12,7 +12,7 @@
     items.items(v-bind:obj="flowsandfolders" v-if="!search")
     items.items(v-bind:obj="filterFlows" v-if="search && filterFlows.length")
     div(v-if="search && !filterFlows.length")
-      center No matching flows found!
+      center.has-text-white No matching flows found!
 
 </template>
 
