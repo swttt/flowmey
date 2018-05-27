@@ -9,7 +9,7 @@
         span.icon.is-left
           i.fas.fa-search
     v-collapse-group(v-if="!search")
-      items.items(v-bind:obj="flowsandfolders" )
+      items.items(v-bind:obj="tree" )
     items.items(v-bind:obj="filterFlows" v-if="search && filterFlows.length")
     div(v-if="search && !filterFlows.length")
       center.has-text-white No matching flows found!
@@ -27,39 +27,36 @@ export default {
     return {
       folders: {},
       flows: {},
-      search: null
-    }
+      tree: [],
+      search: null,
+    };
   },
-  created () {
-    this.$homey.flow.getFolders()
-      .then(result => {
-        this.folders = result
-      })
-
-    this.$homey.flow.getFlows()
-      .then(result => {
-        this.flows = result
-        console.log(this.convert(false))
-      })
+  created() {
+    Promise.all([
+      this.$homey.flow.getFolders(),
+      this.$homey.flow.getFlows(),
+    ]).then(([ folders, flows ]) => {
+      this.folders = folders;
+      this.flows   = flows;
+      this.tree    = this.generateTree(false);
+    });
   },
   methods: {
-    convert (folder) {
-      var arr = {...this.flows, ...this.folders}
-      arr = lodash.orderBy(arr, 'order')
-      var out = []
-      for (var i in arr) {
-        var obj = arr[i]
-        if (obj.folder === folder) {
-          var children = this.convert(obj.id)
-
+    generateTree(folder) {
+      return lodash({ ...this.flows, ...this.folders })
+        .orderBy('order')
+        .values()
+        .map(obj => {
+          if (obj.folder !== folder) return null;
+          const children = this.generateTree(obj.id);
           if (children.length) {
             obj.children = children;
           }
-          out.push(obj)
-        }
-      }
-      return out
-    }
+          return obj;
+        })
+        .compact()
+        .value();
+    },
   },
   computed: {
     filterFlows() {

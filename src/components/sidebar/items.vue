@@ -2,9 +2,9 @@
 div.item
   ul
     li.child(v-for="item in obj")
-      flow( :flow="item" :key="item.id" v-if="item.__athom_api_type === 'HomeyAPI.ManagerFlow.Flow'")
+      flow( :flow="item" :key="item.id" v-if="isFlow(item)")
 
-      div(v-if="item.children && item.__athom_api_type === 'HomeyAPI.ManagerFlow.Folder'")
+      div(v-if="item.children && isFolder(item)")
         v-collapse-group
           v-collapse-wrapper
             folder(v-collapse-toggle='' :folder="item" :key="item.id")
@@ -25,6 +25,17 @@ export default {
     items,
     folder,
     flow
+  },
+  methods: {
+    isFlow(item) {
+      return item.__athom_api_type === 'HomeyAPI.ManagerFlow.Flow';
+    },
+    isFolder(item) {
+      return item.__athom_api_type === 'HomeyAPI.ManagerFlow.Folder';
+    },
+    matchesQuery(item) {
+      return !this.query || item.title.toLowerCase().includes(this.query.toLowerCase());
+    }
   }
 };
 
