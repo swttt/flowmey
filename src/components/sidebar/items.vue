@@ -7,9 +7,9 @@ div.item
       div(v-if="item.children && item.__athom_api_type === 'HomeyAPI.ManagerFlow.Folder'")
         v-collapse-group
           v-collapse-wrapper
-            folder(v-collapse-toggle :folder="item" :key="item.id")
-            items(v-collapse-content :obj="item.children")
-      folder(v-if="!item.children && item.__athom_api_type === 'HomeyAPI.ManagerFlow.Folder'" :folder="item" :key="item.id")
+            folder(v-collapse-toggle='' :folder="item" :key="item.id")
+            items(v-collapse-content='' :obj="item.children")
+      folder(v-if="!item.children && isFolder(item)" :folder="item" :key="item.id")
 
 </template>
 
