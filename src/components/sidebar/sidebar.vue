@@ -85,7 +85,7 @@ export default {
   z-index 2
 
 .items
-  overflow-y scroll
+  overflow-y auto
   height calc(100vh - 150px)
 
 </style>

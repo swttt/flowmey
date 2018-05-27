@@ -59,4 +59,7 @@ export default {
     width 80%
     margin auto
 
+  .content
+    overflow-y auto
+
 </style>
