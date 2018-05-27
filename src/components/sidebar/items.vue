@@ -43,11 +43,15 @@ export default {
 
 <style lang="stylus">
 
-ul li
-  list-style none
-  margin-left 15px
-  position relative
-  padding-left 5px
-  font-size 14px
+.items
+  ul li
+    list-style none
+    margin-left 15px
+    position relative
+    padding-left 5px
+    font-size 14px
+  > ul, > ul > li
+    margin-left 0
+    padding-left 0
 
 </style>

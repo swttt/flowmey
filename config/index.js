@@ -40,7 +40,8 @@ module.exports = {
     // https://vue-loader.vuejs.org/en/options.html#cachebusting
     cacheBusting: true,
 
-    cssSourceMap: true
+    // Because of https://github.com/webpack-contrib/css-loader/issues/613
+    cssSourceMap: false 
   },
 
   build: {
