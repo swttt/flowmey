@@ -17,15 +17,13 @@
 </template>
 
 <script>
-import lodash from 'lodash'
-import items from '@/components/sidebar/items'
+import lodash from 'lodash';
+import items from '@/components/sidebar/items';
 
 export default {
   name: 'Sidebar',
-  components: {
-    items
-  },
-  data () {
+  components: { items },
+  data() {
     return {
       folders: {},
       flows: {},
@@ -55,7 +53,7 @@ export default {
           var children = this.convert(obj.id)
 
           if (children.length) {
-            obj.children = children
+            obj.children = children;
           }
           out.push(obj)
         }
@@ -64,17 +62,14 @@ export default {
     }
   },
   computed: {
-    flowsandfolders: function () {
-      return this.convert(false)
+    filterFlows() {
+      return lodash.filter(
+        this.flows,
+        flow => lodash.includes(flow.title.toLowerCase(), this.search.toLowerCase()),
+      );
     },
-    filterFlows: function () {
-      var self = this
-      return lodash.filter(this.flows, (flow) => {
-        return lodash.includes(flow.title.toLowerCase(), self.search.toLowerCase())
-      })
-    }
-  }
-}
+  },
+};
 </script>
 
 <style lang="stylus">

@@ -20,7 +20,7 @@ export default {
   props: ['card'],
   components: {
   }
-}
+};
 
 </script>
 

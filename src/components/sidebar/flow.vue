@@ -21,7 +21,7 @@ export default {
   props: ['flow'],
   components: {
   }
-}
+};
 
 </script>
 

@@ -14,9 +14,9 @@ div.item
 </template>
 
 <script>
-import items from '@/components/sidebar/items'
-import folder from '@/components/sidebar/folder'
-import flow from '@/components/sidebar/flow'
+import items from '@/components/sidebar/items';
+import folder from '@/components/sidebar/folder';
+import flow from '@/components/sidebar/flow';
 
 export default {
   name: 'items',
@@ -26,7 +26,7 @@ export default {
     folder,
     flow
   }
-}
+};
 
 </script>
 

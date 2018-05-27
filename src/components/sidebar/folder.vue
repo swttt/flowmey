@@ -13,7 +13,7 @@ export default {
   props: ['folder'],
   components: {
   }
-}
+};
 
 </script>
 
