@@ -17,37 +17,35 @@
 </template>
 
 <script>
-import card from '@/components/flow/card'
+import card from '@/components/flow/card';
 
 export default {
   name: 'Flow',
   props: ['flow'],
-  components: {
-    card
-  },
-  data () {
+  components: { card },
+  data() {
     return {
       currentFlow: {}
-    }
+    };
   },
-  mounted () {
+  mounted() {
     if (this.$route.params.flow) {
-      this.getFlow(this.$route.params.flow)
+      this.getFlow(this.$route.params.flow);
     }
   },
   methods: {
-    getFlow (flow) {
-      this.$homey.flow.getFlow({id: flow})
+    getFlow(flow) {
+      this.$homey.flow.getFlow({ id: flow })
         .then(result => {
-          this.currentFlow = result
-        })
+          this.currentFlow = result;
+        });
     }
   },
-  beforeRouteUpdate (to, from, next) {
-    this.getFlow(to.params.flow)
-    next()
+  beforeRouteUpdate(to, from, next) {
+    this.getFlow(to.params.flow);
+    next();
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
