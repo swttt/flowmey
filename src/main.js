@@ -2,15 +2,11 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import querystring from 'query-string';
-import VueCollapse from 'vue2-collapse';
 import App from './App';
 import router from './router';
-// import lodash from 'lodash'
 
 require('styles/bulma.sass');
 require('styles/main.styl');
-
-Vue.use(VueCollapse);
 
 Vue.config.productionTip = false;
 
@@ -36,9 +32,7 @@ function loadVue() {
   new Vue({
     el: '#app',
     router,
-    components: {
-      App
-    },
+    components: { App },
     template: '<App/>',
   });
 }

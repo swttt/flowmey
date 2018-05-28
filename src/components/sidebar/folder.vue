@@ -1,7 +1,9 @@
 <template lang="pug">
-span
-  span.paddingright3
+
+span.folder(:class = "isExpanded ? 'open' : 'closed'")
+  span.paddingright3.fa-layers.fa-fw
     i.fas.fa-folder
+    i.fas.fa-folder-open
   | {{folder.title}}
 
 </template>
@@ -10,18 +12,31 @@ span
 
 export default {
   name: 'folder',
-  props: ['folder'],
+  props: ['folder', 'isExpanded'],
   components: {
   }
 };
 
 </script>
 
-<style lang="stylus">
+<style scoped lang="stylus">
 
-  .disabled
-    opacity 0.5
-  .paddingright3
-    padding-right 3px
+.folder
+  .fa-folder-open
+    display none
+  .fa-folder
+    display inline-block
+
+  &.open
+    .fa-folder-open
+      display inline-block
+    .fa-folder
+      display none
+
+.disabled
+  opacity 0.5
+
+.paddingright3
+  padding-right 3px
 
 </style>
