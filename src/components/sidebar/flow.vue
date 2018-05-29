@@ -37,4 +37,11 @@ export default {
 .paddingleft3
   padding-left 3px
 
+.router-link-active
+  > div
+    padding-left 10px
+    margin-left -10px
+    background rgba(255, 255, 255, 0.3)
+    border-radius 3px
+
 </style>
