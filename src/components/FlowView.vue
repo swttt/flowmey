@@ -2,42 +2,54 @@
     div.content
       div
         b Flow: {{currentFlow.title}}
-      div
+      div(v-if="currentFlow.folder")
         b Folder: {{currentFlow.folder}}
       br
       br
       div.cardGroup IF
-        card(v-if="currentFlow.trigger" :card="currentFlow.trigger")
+        triggercard(v-if="currentFlow.trigger" :card="currentFlow.trigger" :cards="this.cards")
       br
       div.cardGroup AND
-        card(v-if="currentFlow.conditions" v-for="card in currentFlow.conditions" :key="card.id" :card="card")
+        conditioncard(v-if="currentFlow.conditions" v-for="card in currentFlow.conditions" :key="card.id" :card="card" :cards="cards")
       br
       div.cardGroup THEN
-        card(v-if="currentFlow.actions" v-for="card in currentFlow.actions" :key="card.id" :card="card")
+        actioncard(v-if="currentFlow.actions" v-for="card in currentFlow.actions" :key="card.id" :card="card" :cards="cards")
 </template>
 
 <script>
-import card from '@/components/flow/card';
+import lodash from 'lodash';
+import triggercard from '@/components/flow/triggercard';
+import conditioncard from '@/components/flow/conditioncard';
+import actioncard from '@/components/flow/actioncard';
 
 export default {
   name: 'Flow',
   props: ['flow'],
-  components: { card },
+  components: { triggercard, conditioncard, actioncard },
   data() {
     return {
-      currentFlow: {}
+      currentFlow: {},
+      cards: {}
     };
   },
   mounted() {
     if (this.$route.params.flow) {
       this.getFlow(this.$route.params.flow);
     }
+
+    this.getCards();
   },
   methods: {
-    getFlow(flow) {
+    getFlow: function(flow) {
       this.$homey.flow.getFlow({ id: flow })
         .then(result => {
           this.currentFlow = result;
+        });
+    },
+    getCards: function() {
+      this.$homey.flow.getCards()
+        .then(result => {
+          this.cards = result;
         });
     }
   },
@@ -58,6 +70,9 @@ export default {
     text-align center
     width 80%
     margin auto
+  .cardTitle
+    margin-left 7px
+    margin-right 3px
 
   .content
     overflow-y auto
