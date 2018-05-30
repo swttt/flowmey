@@ -1,4 +1,5 @@
 <template lang="pug">
+
 router-link(:to="{ name: 'Flow', params: { flow: flow.id } }")
   div.flow
     span.has-text-white(v-if="flow.enabled")
@@ -25,13 +26,22 @@ export default {
 
 </script>
 
-<style lang="stylus">
+<style scoped lang="stylus">
 
-  .disabled
-    opacity 0.5
-  .paddingright3
-    padding-right 3px
-  .paddingleft3
-    padding-left 3px
+.disabled
+  opacity 0.5
+
+.paddingright3
+  padding-right 3px
+
+.paddingleft3
+  padding-left 3px
+
+.router-link-active
+  > div
+    padding-left 10px
+    margin-left -10px
+    background rgba(255, 255, 255, 0.3)
+    border-radius 3px
 
 </style>
