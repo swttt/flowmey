@@ -13,8 +13,8 @@ div.sidebar
   sl-vue-tree.flow-tree(v-model = 'tree' ref = 'flowTree')
     template(slot = 'title' slot-scope = '{ node }')
       span(@click = 'ev => ! node.isLeaf && toggleExpansion(ev, node)')
-        flow(v-if   = 'node.isLeaf'  :flow   = 'node.data.obj')
-        folder(v-if = '!node.isLeaf' :folder = 'node.data.obj' :isExpanded = 'node.isExpanded')
+        flow(v-if   = 'node.isLeaf  && node.data.isVisible' :flow   = 'treeToHomey[node.data.id]')
+        folder(v-if = '!node.isLeaf && node.data.isVisible' :folder = 'treeToHomey[node.data.id]' :isExpanded = 'node.isExpanded')
     template(slot = 'toggle' slot-scope = '{ node }')
       span
 
@@ -34,34 +34,38 @@ export default {
       folders: {},
       flows: {},
       tree: [],
-      idToObj: {},
+      treeBackup: [],
+
       search: null,
+      isSearching: false,
+
+      // lookup tables
+      treeToHomey: {},
+      homeyToTree: {},
     };
   },
   watch: {
     search(query) {
-      const { flowTree } = this.$refs;
-
-      query = query.toLowerCase();
-      console.log('S', query);
-      let isMatch = node => node.title.toLowerCase().includes(query);
-
       if (typeof query !== 'string' || query.length === 0) {
-        isMatch = () => true;
+        // If we were searching, but now we're not,
+        // restore the tree state to its previous value.
+        if (this.isSearching) {
+          this.deserializeTree();
+        }
+        this.isSearching = false;
+        return;
       }
 
-      flowTree.traverse(node => {
-        if (node.isLeaf) {
-          const isVisible = isMatch(node);
-          const path = Array.from(node.path);
-          for (let i = 1; i < path.length; i += 1) {
-            const subPath = path.slice(0, i);
-            // if (node.data.isVisible !== isVisible) {
-            flowTree.updateNode(subPath, { isExpanded: true, data: { isVisible } });
-            // }
-          }
-        }
-      });
+      // If we weren't searching, but now we are, store the
+      // current state of the tree so we can restore it later.
+      if (!this.isSearching) {
+        this.serializeTree();
+        this.isSearching = true;
+      }
+
+      query = query.toLowerCase();
+      const matcher = node => node.isLeaf && node.title.toLowerCase().includes(query);
+      this.expandTree(this.tree, matcher);
     }
   },
   created() {
@@ -69,12 +73,58 @@ export default {
       this.$homey.flow.getFolders(),
       this.$homey.flow.getFlows(),
     ]).then(([ folders, flows ]) => {
-      this.folders = folders;
-      this.flows   = flows;
-      this.tree    = this.generateTree(false);
+      this.folders     = folders;
+      this.flows       = flows;
+      this.treeToHomey = {};
+      this.homeyToTree = {};
+      this.tree        = this.generateTree(false);
     });
   },
   methods: {
+    // Recurse through all nodes of the tree and run a function on each.
+    recurseTree(root, onNode) {
+      if (!root) return;
+      for (const node of root) {
+        onNode(node);
+        this.recurseTree(node.children, onNode);
+      }
+    },
+    serializeTree() {
+      this.treeBackup = {};
+      this.recurseTree(this.tree, node => {
+        this.treeBackup[node.data.id] = {
+          id: node.data.id,
+          isExpanded: node.isExpanded,
+          isVisible: node.data.isVisible
+        };
+      });
+    },
+    deserializeTree() {
+      this.recurseTree(this.tree, node => {
+        const backup = this.treeBackup[node.data.id];
+        if (backup) {
+          node.isExpanded = backup.isExpanded;
+          node.data.isVisible = backup.isVisible;
+        }
+      });
+    },
+    expandTree(tree, matcher) {
+      let hasMatch = false;
+      for (const node of tree) {
+        if (node.isLeaf) {
+          node.isExpanded = matcher(node);
+        } else {
+          node.isExpanded = this.expandTree(node.children || [], matcher);
+        }
+        if (node.isExpanded) {
+          node.data.isVisible = true;
+          hasMatch = true;
+        } else {
+          node.data.isVisible = false;
+        }
+      }
+      return hasMatch;
+    },
     isFlow(item) {
       return item.__athom_api_type === 'HomeyAPI.ManagerFlow.Flow';
     },
@@ -90,29 +140,30 @@ export default {
       return lodash({ ...this.flows, ...this.folders })
         .orderBy('order')
         .values()
-        .map(obj => {
-          this.idToObj[obj.id] = obj;
-          if (obj.folder !== target) return null;
-          const children = this.generateTree(obj.id);
-          return {
-            id: obj.id,
-            title: obj.title,
+        .map(flowOrFolder => {
+          this.treeToHomey[flowOrFolder.id] = flowOrFolder;
+          if (flowOrFolder.folder !== target) return null;
+
+          // Generate array with children.
+          const children = this.generateTree(flowOrFolder.id);
+
+          // Tree node.
+          const node = {
+            title: flowOrFolder.title,
             isExpanded: false,
-            isLeaf: this.isFlow(obj),
-            data: { obj, isVisible: true },
+            isLeaf: this.isFlow(flowOrFolder),
+            data: { id: flowOrFolder.id, isVisible: true },
             children
           };
+
+          // Update lookup tables.
+          this.homeyToTree[flowOrFolder.id] = node;
+
+          // Done
+          return node;
         })
         .compact()
         .value();
-    },
-  },
-  computed: {
-    filterFlows() {
-      return lodash.filter(
-        this.flows,
-        f => lodash.includes(f.title.toLowerCase(), this.search.toLowerCase()),
-      );
     },
   },
 };
