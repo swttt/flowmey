@@ -30,6 +30,8 @@ module.exports = {
     'comma-dangle' : 'off',
     'no-underscore-dangle' : 'off',
     'max-len' : 'off',
+    'no-restricted-syntax' : 'off',
+    'no-console' : 'off',
     // allow async-await
     'generator-star-spacing': 'off',
     // allow debugger during development
