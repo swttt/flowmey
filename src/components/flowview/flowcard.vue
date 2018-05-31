@@ -1,19 +1,20 @@
 <template lang="pug">
 
 div.box.flow-card
+
   div.columns
     div.column.is-narrow.flow-icon-container
-      img.flow-icon(:src="$homey._baseUrl+card.uriObj.icon")
+      img.flow-icon(:src="$homey._baseUrl + card.uriObj.icon")
     div.column.flow-title-container
       div.columns.is-paddingless
         div.column.has-text-left.is-marginless
           span(v-if = 'card.droptoken')
             span.tag.is-success.is-small(v-if = 'card.droptoken') {{ card.droptoken }}
             span &nbsp;
-          span.flow-title {{ getInvertValue(cardInstance.title.en, card.inverted) }}
+          span.flow-title {{ getInvertValue(card.base.title.en, card.inverted) }}
           // div.alignLeft.disabled(v-if="card.uriObj.meta") {{ card.uriObj.name }} - {{card.uriObj.meta.zoneName}}
       div.columns.is-paddingless
-        div.column.is-marginless.flow-args(v-for="arg in cardInstance.args")
+        div.column.is-marginless.flow-args(v-for="arg in card.base.args")
           // split v-if and actual presentation
           // Date
           div(v-if="arg.type === 'date'")
@@ -46,15 +47,12 @@ div.box.flow-card
           // Droptoken
           div(v-if="arg.type === 'droptoken'")
             div {{arg}}
-    //-
-      tr(v-if="cardInstance.tokens")
-        td
-          div.cardTitle Available tokens:
-        td
-          p(v-for="token in cardInstance.tokens" :key="token.name")  "{{token.title.en}}"
+      div.columns.is-pulled-right(v-if = 'card.base.tokens')
+        div.column.flow-card-token(v-for = 'token in card.base.tokens' :key = 'token.name')
+          span.tag.is-info.is-small {{ token.title.en }}
 
     //debug:
-    //div.cardInstance {{card}}
+    //div.card.base {{card}}
 
 </template>
 
@@ -62,12 +60,8 @@ div.box.flow-card
 
 export default {
   name: 'flowcard',
-  props: ['card', 'cardInstance'],
+  props: ['card'],
   components: {},
-  created() {
-    console.log('card ', JSON.stringify(this.card));
-    console.log('cardI', JSON.stringify(this.cardInstance));
-  },
   methods: {
     getInvertValue(label, inverted) {
       return label.replace(/!{{.*?}}/g, tmpl => {
@@ -110,5 +104,10 @@ export default {
 
 .flow-args
   padding-top 8px
+
+.flow-card-token
+  padding-left 1px
+  &:not(:last-child)
+    padding-right 1px
 
 </style>

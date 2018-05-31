@@ -14,8 +14,6 @@ div
 export default {
   name: 'navigation',
   props: ['flow'],
-  data() {
-  },
 };
 
 </script>
