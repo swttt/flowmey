@@ -4,10 +4,10 @@ div.content
   navigation(v-bind:flow = 'currentFlow')
   div.card-group IF
     triggercard(v-if = 'currentFlow.trigger' :card = 'currentFlow.trigger')
-  div.card-group(v-if = 'currentFlow.conditions.length') AND
-    conditioncard(v-for='card in currentFlow.conditions' :key = 'card.id' :card = 'card')
-  div.card-group(v-if = 'currentFlow.actions.length') THEN
-    actioncard(v-if = 'currentFlow.actions' v-for='card in currentFlow.actions' :key = 'card.id' :card = 'card')
+  div.card-group(v-if = 'currentFlow.conditions') AND
+    conditioncard(v-for='card in currentFlow.conditions' :key = 'idForCard(card)' :card = 'card')
+  div.card-group(v-if = 'currentFlow.actions') THEN
+    actioncard(v-if = 'currentFlow.actions' v-for='card in currentFlow.actions' :key = 'idForCard(card)' :card = 'card')
 
 </template>
 
@@ -44,6 +44,14 @@ export default {
     this.getData(this.$route.params.flow);
   },
   methods: {
+    idForCard(card) {
+      if (card.uri === 'homey:manager:flow') {
+        if (card.args && card.args.flow && card.args.flow.id) {
+          return card.args.flow.id;
+        }
+      }
+      return card.id;
+    },
     getData(flow) {
       Promise.all([
         this.getCards(),

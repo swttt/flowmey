@@ -61,7 +61,6 @@ div.box.flow-card
 export default {
   name: 'flowcard',
   props: ['card'],
-  components: {},
   methods: {
     getInvertValue(label, inverted) {
       return label.replace(/!{{.*?}}/g, tmpl => {
