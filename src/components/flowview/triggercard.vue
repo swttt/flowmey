@@ -1,11 +1,9 @@
 <template lang="pug">
 
-// TODO: THEN/ElSE grouping card.group contains then, else to specify it's target
-
 div.margin
   div.card(v-if="!card.broken")
     div(v-for="group in cards" :key="group.id")
-      div(v-for="cardInstance in group.cards.action" v-if="cardInstance.id === card.id && group.uri === card.uri")
+      div(v-for="cardInstance in group.cards.trigger" v-if="cardInstance.id === card.id && group.uri === card.uri")
         flowcard(:card="card" :cardInstance="cardInstance")
 
   div.card.broken(v-else)
@@ -14,10 +12,10 @@ div.margin
 </template>
 
 <script>
-import flowcard from '@/components/flow/flowcard';
+import flowcard from './flowcard';
 
 export default {
-  name: 'actioncard',
+  name: 'triggercard',
   props: ['cards', 'card'],
   components: {
     flowcard
@@ -26,13 +24,15 @@ export default {
 
 </script>
 
-<style lang="stylus">
+<style scoped lang="stylus">
 @import '~styles/variables.styl'
 
 .margin
   margin 2px
+
 .broken
   text-align center
+
 .card
   font-size 16px
   border-style solid

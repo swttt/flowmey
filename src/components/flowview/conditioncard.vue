@@ -1,9 +1,11 @@
 <template lang="pug">
 
+// TODO: OR grouping card.group contains group1, group2 etc for each OR group
+
 div.margin
   div.card(v-if="!card.broken")
     div(v-for="group in cards" :key="group.id")
-      div(v-for="cardInstance in group.cards.trigger" v-if="cardInstance.id === card.id && group.uri === card.uri")
+      div(v-for="cardInstance in group.cards.condition" v-if="cardInstance.id === card.id && group.uri === card.uri")
         flowcard(:card="card" :cardInstance="cardInstance")
 
   div.card.broken(v-else)
@@ -12,10 +14,10 @@ div.margin
 </template>
 
 <script>
-import flowcard from '@/components/flow/flowcard';
+import flowcard from './flowcard';
 
 export default {
-  name: 'triggercard',
+  name: 'conditioncard',
   props: ['cards', 'card'],
   components: {
     flowcard
@@ -24,13 +26,15 @@ export default {
 
 </script>
 
-<style lang="stylus">
+<style scoped lang="stylus">
 @import '~styles/variables.styl'
 
 .margin
   margin 2px
+
 .broken
   text-align center
+
 .card
   font-size 16px
   border-style solid

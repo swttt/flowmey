@@ -66,50 +66,43 @@ div
 export default {
   name: 'flowcard',
   props: ['card', 'cardInstance'],
-  components: {
-  },
+  components: {},
   methods: {
     getInvertValue(label, inverted) {
-      // Example 1: 'Is turned !{{on|off}}'
-      // Example 2: 'Today is !{{|not}} a...'
-      // Example 3: '!{{Vraag om bevestiging|Krijg geen bevestiging}}'
-
-      if(label.indexOf("!{{") !== -1 && label.indexOf("}}") !== -1) {
-        var middlePart = label.substring(label.indexOf('!{{') + 3, label.indexOf('}}'));
-
-        var splittedFrontPart = label.split("!{{")[0];
-        var splittedMiddlePart = middlePart.split("|")[(inverted) ? 1 : 0];
-        var splittedEndPart = label.split("}}")[1];
-
-        return splittedFrontPart + ' ' + splittedMiddlePart + ' ' + splittedEndPart;
-      }
-      return label;
+      return label.replace(/!{{.*?}}/g, tmpl => {
+        const m = tmpl.match(/!\{\{(.*?)(?:\|(.*?))\}\}/);
+        return m ? m[1 + Number(inverted)] : tmpl;
+      });
     }
   }
 };
 
 </script>
 
-<style lang="stylus">
+<style scoped lang="stylus">
 @import '~styles/variables.styl'
 
-  .flowInput
-    width 300px
-  .colspan2
-    colspan 2
-  .alignLeft
-    text-align left
-  .flowCardHeader
-    font-weight bold
-  .headerIcon
-    float left
-    height 55px
-    width 55px
-    position relative
-    top 7px
-    left 7px
-    -webkit-mask-size contain
-    -webkit-mask-position top left
-    -webkit-mask-repeat no-repeat
+.flowInput
+  width 300px
+
+.colspan2
+  colspan 2
+
+.alignLeft
+  text-align left
+
+.flowCardHeader
+  font-weight bold
+
+.headerIcon
+  float left
+  height 55px
+  width 55px
+  position relative
+  top 7px
+  left 7px
+  -webkit-mask-size contain
+  -webkit-mask-position top left
+  -webkit-mask-repeat no-repeat
 
 </style>
