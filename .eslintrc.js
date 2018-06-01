@@ -32,6 +32,8 @@ module.exports = {
     'max-len' : 'off',
     'no-restricted-syntax' : 'off',
     'no-console' : 'off',
+    'no-shadow' : 'off',
+    'key-spacing': 'off',
     // allow async-await
     'generator-star-spacing': 'off',
     // allow debugger during development
