@@ -12,8 +12,7 @@ module.exports = {
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
     'plugin:vue/essential', 
-    // https://github.com/standard/standard/blob/master/docs/RULES-en.md
-    'standard'
+    'airbnb'
   ],
   // required to lint *.vue files
   plugins: [
@@ -21,6 +20,20 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
+    'import/no-unresolved' : 'off',
+    'import/extensions' : 'off',
+    'arrow-parens' : 'off',
+    'guard-for-in' : 'off',
+    'no-param-reassign' : 'off',
+    'no-multi-spaces' : 'off',
+    'array-bracket-spacing' : 'off',
+    'comma-dangle' : 'off',
+    'no-underscore-dangle' : 'off',
+    'max-len' : 'off',
+    'no-restricted-syntax' : 'off',
+    'no-console' : 'off',
+    'no-shadow' : 'off',
+    'key-spacing': 'off',
     // allow async-await
     'generator-star-spacing': 'off',
     // allow debugger during development
