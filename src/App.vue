@@ -5,18 +5,18 @@
 </template>
 
 <script>
-import sidebar from '@/components/sidebar/sidebar';
+import sidebar from '@/components/sidebar/sidebar'
 // import Vue from 'vue'
 // import queryString from 'query-string'
 // import lodash from 'lodash'
 
 export default {
   name: 'App',
-  data() {
+  data () {
     return {
       multipleHomeys: true,
       allHomeys: []
-    };
+    }
   },
   // methods: {
   //   async selectHomey (id) {
@@ -27,11 +27,13 @@ export default {
   //     Vue.prototype.$homey = await selectedHomey
   //   }
   // },
-  async created() {
-    // empty
+  async created () {
+
   },
-  components: { sidebar }
-};
+  components: {
+    sidebar
+  }
+}
 </script>
 
 <style lang="stylus">
